@@ -5,3 +5,7 @@
 - foundry getting started
 - introduction to solidity
 - ERC20
+
+
+### References
+- https://github.com/samnang/solidity-examples 
