@@ -4,8 +4,9 @@
         "editor.defaultFormatter": "JuanBlanco.solidity"
     },
     "solidity.formatter": "forge",
-    "solidity.packageDefaultDependenciesDirectory": "node_modules",
-    "solidity.remappingsUnix": [
-        "@openzeppelin/=node_modules/@openzeppelin/"
+    "solidity.packageDefaultDependenciesContractsDirectory": "src",
+    "solidity.packageDefaultDependenciesDirectory": "lib",
+    "solidity.remappings": [
+        "@openzeppelin/=workshop_day2/lib/openzeppelin-contracts/"
     ]
 }
