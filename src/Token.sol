@@ -6,9 +6,19 @@ import {ERC20} from "openzeppelin-contracts/contracts/token/ERC20/ERC20.sol";
 contract Token is ERC20 {
     string public constant TOKEN_NAME = "Fufufafa Official";
     string public constant TOKEN_SYMBOL = "FUFA";
-    uint256 public constant INITIAL_SUPPLY = 100_000_000_000 * 10 ** 18; // 100 bilion
+    uint256 public constant MAX_SUPPLY = 10_000;
+
+    address public owner;
 
     constructor() ERC20(TOKEN_NAME, TOKEN_SYMBOL) {
-        _mint(msg.sender, INITIAL_SUPPLY);
+        owner = msg.sender;
+    }
+
+    function mint(address to, uint256 amount) public {
+        // mint must be owner
+        require(msg.sender == owner, "Only Owner can mint");
+        // check the total supply
+        require(totalSupply() + amount <= MAX_SUPPLY, "Max Supply exceeded");
+        _mint(to, amount);
     }
 }
