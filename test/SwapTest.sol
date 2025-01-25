@@ -23,8 +23,6 @@ contract SwapTest is Test {
     }
 
     function test_swap() public {
-        // swap.swap(100, 100);
-
         // memberikan 1000 usdc ke contract address
         // penulisan 1000e6 karena usdc menggunakan 6 decimals
         deal(USDC, address(this), 1000e6);
