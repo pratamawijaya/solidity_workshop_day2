@@ -17,8 +17,11 @@ contract MyTokenTest is Test {
     }
 
     function test_mint_exceed_total_supply() public {
+        // check the max supply
         assertEq(token.MAX_SUPPLY(), 10_000);
+        // expect revert
         vm.expectRevert("Max Supply exceeded");
+        // try to mint token exceed max supply
         token.mint(address(this), 100_0000);
     }
 }
