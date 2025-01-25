@@ -21,11 +21,24 @@ contract LendingTest is Test {
     }
 
     function test_lending() public {
+        // cheat untuk menambah token wbtc ke contract address
         deal(wbtc, address(this), 1e8);
+        // approve WBT to contract address
         IERC20(wbtc).approve(address(lending), 1e8);
+
         lending.supplyAndBorrow(1e8, 1000e6);
         uint256 usdcBalance = IERC20(usdc).balanceOf(address(this));
         console.log("USDC Balance", usdcBalance);
         assertEq(usdcBalance, 1000e6);
+    }
+
+    function test_lending_leverage() public {
+        // cheat untuk menambah token wbtc ke contract address
+        deal(wbtc, address(this), 1e8);
+        // approve WBT to contract address
+        IERC20(wbtc).approve(address(lending), 1e8);
+        lending.leverage(1e8, 50_000e6);
+        uint256 usdcBalance = IERC20(usdc).balanceOf(address(this));
+        console.log("USDC Balance", usdcBalance);
     }
 }
