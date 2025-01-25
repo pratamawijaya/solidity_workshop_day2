@@ -27,7 +27,7 @@ contract SwapTest is Test {
         // penulisan 1000e6 karena usdc menggunakan 6 decimals
         deal(USDC, address(this), 1000e6);
         IERC20(USDC).approve(address(swap), 1000e6);
-        swap.swap(1000e6); // swap usdc to wbtc
+        swap.swap(1000e6, 100); // swap usdc to wbtc
         // check wbtc balance
         uint256 wbtcBalance = IERC20(WBTC).balanceOf(address(this));
         console.log("WBTC Balance", wbtcBalance);

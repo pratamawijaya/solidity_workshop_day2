@@ -28,7 +28,17 @@ contract Swap {
     address public constant wbtc = 0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599;
     address public constant usdc = 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;
 
-    function swap(uint256 amountIn) public {
+    function swap(uint256 amountIn, uint256 minAmountOut) public {
+        // jika ada proses swap wajib ada minAmountOut, terkait keamanan dan audit
+        // case slipage, jika alice mau swap 1000USDC dan alice menentukan minimal WBTC yang didapatkan misal 0.09
+        // jika ternyata yang didapatkan dibawah 0.09 maka transaction akan gagal
+
+        // contoh slipage case 10%
+        // jika budi membeli 1btc dengan 100k
+        // dengan slipage 10% maka akan mendapatkan 0.9
+
+        // case terkait issue slipage contohnya adalah sandwich attack
+
         // transfer dari user ke contract swap
         IERC20(usdc).transferFrom(msg.sender, address(this), amountIn);
 
@@ -39,7 +49,7 @@ contract Swap {
             recipient: msg.sender,
             deadline: block.timestamp,
             amountIn: amountIn,
-            amountOutMinimum: 0,
+            amountOutMinimum: minAmountOut, // slipage
             sqrtPriceLimitX96: 0
         });
 
