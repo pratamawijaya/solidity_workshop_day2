@@ -3,7 +3,7 @@ pragma solidity ^0.8.13;
 
 import {IERC20} from "../lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
 
-https://etherscan.io/address/0x87870bca3f3fd6335c3f4ce8392d69350b4fa4e2#writeProxyContract
+// https://etherscan.io/address/0x87870bca3f3fd6335c3f4ce8392d69350b4fa4e2#writeProxyContract
 interface IAavePool {
     function supply(address asset, uint256 amount, address onBehalfOf, uint16 referralCode) external;
     function borrow(address asset, uint256 amount, uint256 interestRateMode, uint16 referralCode, address onBehalfOf)
