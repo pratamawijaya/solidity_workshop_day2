@@ -3,12 +3,13 @@ pragma solidity ^0.8.20;
 import {IERC20} from "openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
 import {IERC20Metadata} from "openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 import {SafeERC20} from "openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol";
+import {ReentrancyGuard} from "openzeppelin-contracts/contracts/utils/ReentrancyGuard.sol";
 
 interface IOracle {
     function getPrice() external view returns (uint256);
 }
 
-contract LendingPool {
+contract LendingPool is ReentrancyGuard {
     using SafeERC20 for IERC20;
     // erros
 
