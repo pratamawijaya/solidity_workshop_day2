@@ -64,7 +64,7 @@ contract LendingPool is ReentrancyGuard {
         ltv = _ltv;
     }
 
-    function supply(uint256 amount) external {
+    function supply(uint256 amount) external nonReentrant {
         if (amount == 0) revert ZeroAmount();
 
         uint256 shares = 0;
@@ -83,7 +83,7 @@ contract LendingPool is ReentrancyGuard {
         emit Supply(msg.sender, amount, shares);
     }
 
-    function withdraw(uint256 shares) external {
+    function withdraw(uint256 shares) external nonReentrant {
         if (shares == 0) revert ZeroAmount();
         if (shares > userSupplyShares[msg.sender]) revert InsufficientShares();
 
@@ -102,7 +102,7 @@ contract LendingPool is ReentrancyGuard {
         emit Withdraw(msg.sender, amount, shares);
     }
 
-    function borrow(uint256 amount) external {
+    function borrow(uint256 amount) external nonReentrant {
         _accrueInterest();
 
         uint256 shares = 0;
@@ -124,7 +124,7 @@ contract LendingPool is ReentrancyGuard {
         emit Borrow(msg.sender, amount, shares);
     }
 
-    function repay(uint256 shares) external {
+    function repay(uint256 shares) external nonReentrant {
         if (shares == 0) revert ZeroAmount();
 
         _accrueInterest();
@@ -140,7 +140,7 @@ contract LendingPool is ReentrancyGuard {
         emit Repay(msg.sender, borrowAmount, shares);
     }
 
-    function supplyCollateral(uint256 amount) external {
+    function supplyCollateral(uint256 amount) external nonReentrant {
         if (amount == 0) revert ZeroAmount();
 
         _accrueInterest();

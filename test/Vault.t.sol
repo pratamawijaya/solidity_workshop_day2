@@ -17,6 +17,11 @@ contract VaultTest is Test {
     function setUp() public {
         // deploy token
         tokenRupiah = new TokenRupiah();
+
+        tokenRupiah.mint(address(this), 1000);
+        address vaultAddress = computeCreateAddress(address(this), vm.getNonce(address(this)));
+        tokenRupiah.approve(address(vaultAddress), 1000);
+
         vault = new Vault(address(tokenRupiah));
 
         tokenRupiah.mint(alice, 1_000_000e6);
