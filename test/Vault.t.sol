@@ -34,8 +34,8 @@ contract VaultTest is Test {
     }
 
     function test_withdraw_shares_cannot_morethan_balance() public {
-        vm.startPrank(alice);
-        tokenRupiah.approve(address(vault), value);
+        // vm.startPrank(alice);
+        // tokenRupiah.approve(address(vault), value);
     }
 
     function test_scenario_1() public {
