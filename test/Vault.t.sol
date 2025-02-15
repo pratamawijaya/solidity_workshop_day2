@@ -64,4 +64,10 @@ contract VaultTest is Test {
         uint256 aliceBalanceAfter = tokenRupiah.balanceOf(alice);
         console.log("alice balance after", aliceBalanceAfter);
     }
+
+    function test_inflation_attack() public {
+        // test alice adalah attacker
+        vm.startPrank(alice);
+        tokenRupiah.transfer(address(vault), 1e6);
+    }
 }

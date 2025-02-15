@@ -2,13 +2,16 @@ pragma solidity ^0.8.20;
 
 import {IERC20} from "openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
 import {IERC20Metadata} from "openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol";
+import {SafeERC20} from "openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol";
 
 interface IOracle {
     function getPrice() external view returns (uint256);
 }
 
 contract LendingPool {
+    using SafeERC20 for IERC20;
     // erros
+
     error ZeroAmount();
     error InsufficientShares();
     error InsufficientLiquidity();
@@ -74,7 +77,7 @@ contract LendingPool {
         totalSupplyShares += shares;
         totalSupplyAssets += amount;
 
-        IERC20(debtToken).transferFrom(msg.sender, address(this), amount);
+        IERC20(debtToken).safeTransferFrom(msg.sender, address(this), amount);
 
         emit Supply(msg.sender, amount, shares);
     }
@@ -93,7 +96,7 @@ contract LendingPool {
 
         if (totalSupplyAssets < totalBorrowAssets) revert InsufficientLiquidity();
 
-        IERC20(debtToken).transfer(msg.sender, amount);
+        IERC20(debtToken).safeTransfer(msg.sender, amount);
 
         emit Withdraw(msg.sender, amount, shares);
     }
@@ -115,7 +118,7 @@ contract LendingPool {
         _isHealthy(msg.sender);
         if (totalBorrowAssets > totalSupplyAssets) revert InsufficientLiquidity();
 
-        IERC20(debtToken).transfer(msg.sender, amount);
+        IERC20(debtToken).safeTransfer(msg.sender, amount);
 
         emit Borrow(msg.sender, amount, shares);
     }
@@ -131,7 +134,7 @@ contract LendingPool {
         totalBorrowShares -= shares;
         totalBorrowAssets -= borrowAmount;
 
-        IERC20(debtToken).transferFrom(msg.sender, address(this), borrowAmount);
+        IERC20(debtToken).safeTransferFrom(msg.sender, address(this), borrowAmount);
 
         emit Repay(msg.sender, borrowAmount, shares);
     }
@@ -143,7 +146,7 @@ contract LendingPool {
 
         userCollaterals[msg.sender] += amount;
 
-        IERC20(collateralToken).transferFrom(msg.sender, address(this), amount);
+        IERC20(collateralToken).safeTransferFrom(msg.sender, address(this), amount);
 
         emit SupplyCollateral(msg.sender, amount);
     }
@@ -158,7 +161,7 @@ contract LendingPool {
 
         _isHealthy(msg.sender);
 
-        IERC20(collateralToken).transfer(msg.sender, amount);
+        IERC20(collateralToken).safeTransfer(msg.sender, amount);
     }
 
     function _isHealthy(address user) internal view {
